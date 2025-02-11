@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox</title>
+    <style>
+        .flex-container{
+            display:flex ;
+            flex-direction:column;
+            background-color:crimson;
+            width: wrap;
+            
+        }
+        .flex-container>div{
+            display: block;
+            flex-direction: row;
+            background-color: wheat;
+            margin: 10px;
+            padding:20px;
+            font-size: 10px;
+        }
+        .header{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: medium;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+       <h2><b>Newspaper article:</b></h2>
+    </div>
+    
+    <div class="flex-container">
+        <div><p>Article 1: Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, ullam ea quo dignissimos mollitia animi! Accusantium dolore modi id corrupti quisquam maxime. Animi harum maxime odit, hic assumenda delectus. Aut.</p></div>
+        <div><p>Article 2: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam quisquam consequatur laborum aut aliquam qui minima placeat nam facere nulla quae praesentium mollitia saepe veritatis fugiat nobis, molestias incidunt adipisci.</p></div>
+        <div><p>Article 3: Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis dolores consectetur, iusto quisquam a consequatur odio mollitia minima necessitatibus labore atque enim repudiandae in aliquam, veniam doloribus? Nam, quam beatae!</p></div>
+        <div><p>Article 4: Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis culpa autem fugit laborum velit. Eveniet veritatis temporibus, possimus quidem voluptatibus placeat? Accusantium architecto illo perferendis debitis impedit magni ipsum. Placeat.</p></div>
+    </div>
+</body>
+</html>
