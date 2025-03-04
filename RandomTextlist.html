@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: lightgray; 
+        }
+        input[type="text"] {
+            width: 250px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        .add-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .clear-btn {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>List Generator</h2>
+    <input type="text" id="inputText" placeholder="Enter text here"><br>
+    <br>
+    <button class="add-btn" onclick="addItem()">Add</button>
+    <button class="clear-btn" onclick="clearList()">Clear</button>
+    <ul id="itemList"></ul>
+    
+    <script>
+        function addItem() {
+            var input = document.getElementById("inputText");
+            var text = input.value.trim();
+            if (text !== "") {
+                var list = document.getElementById("itemList");
+                var listItem = document.createElement("li");
+                listItem.textContent = text;
+
+                var colors = ["#ffcccb", "#cce7ff", "#d4edda", "#fff3cd", "#f8d7da"];
+                listItem.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                list.appendChild(listItem);
+                input.value = ""; 
+            }
+        }
+        
+        function clearList() {
+            document.getElementById("itemList").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
