@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        color: white;
+        text-align: center;
+        padding: 50px;
+    }
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    input {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 200px;
+    }
+    button {
+        padding: 10px 15px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .weather-container {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+        margin-top: 20px;
+    }
+    p {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+</style>
+</head>
+<body>
+  <h1 >Alliance Weather Forecasting</h1> 
+  <form action="">
+    <input type="search" id="city" placeholder="City" required>
+    <button type="submit" onclick="getWeatherData(event)">Search</button>
+  </form>
+  <div>
+    <p id="cityName"></p>
+    <p></p>
+  </div>
+  <script>
+    const api = {
+        base: "https://api.openweathermap.org/data/2.5/weather?q",
+        key : "167ca3ceffd5c85af47d05f222254cf4"
+    }
+    const form = document.querySelector("form");
+    const city = document.getElementById("city");
+    function getWeatherData(event){
+        event.preventDefault;
+        var cityName = city.value;
+        fetch('$(api.base)$(cityName)&units=metric&appid=&{api.key}')
+        .then(data => data.json())
+        .then(data => showWeather(data))
+    }
+
+    function showWeather(data){
+        document.getElementById('city').textContent = data.name;
+        document.getElementById('temp').textContent = data.main.temp * "C"
+
+    }
+  </script>
+</body>
+</html>
