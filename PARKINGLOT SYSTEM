@@ -1,0 +1,111 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+interface ParkingOperations {
+    void parkVehicle(String vehicleDetails);
+    void removeVehicle(String spotID);
+    void viewParkedVehicles();
+    boolean checkAvailability();
+}
+
+class ParkingSpot {
+    String spotID;
+    boolean isOccupied;
+    String vehicleDetails;
+
+    public ParkingSpot(String spotID) {
+        this.spotID = spotID;
+        this.isOccupied = false;
+        this.vehicleDetails = "";
+    }
+
+    public void occupySpot(String vehicleDetails) {
+        isOccupied = true;
+        this.vehicleDetails = vehicleDetails;
+    }
+
+    public void freeSpot() {
+        isOccupied = false;
+        vehicleDetails = "";
+    }
+}
+
+class ParkingLot implements ParkingOperations {
+    private final Map<String, ParkingSpot> parkingSpots;
+
+    public ParkingLot(int capacity) {
+        parkingSpots = new HashMap<>();
+        for (int i = 1; i <= capacity; i++) {
+            parkingSpots.put("P" + i, new ParkingSpot("P" + i));
+        }
+    }
+
+    public void parkVehicle(String vehicleDetails) {
+        for (ParkingSpot spot : parkingSpots.values()) {
+            if (!spot.isOccupied) {
+                spot.occupySpot(vehicleDetails);
+                System.out.println("Vehicle parked at: " + spot.spotID);
+                return;
+            }
+        }
+        System.out.println("No available spots.");
+    }
+
+    public void removeVehicle(String spotID) {
+        ParkingSpot spot = parkingSpots.get(spotID);
+        if (spot != null && spot.isOccupied) {
+            spot.freeSpot();
+            System.out.println("Vehicle removed from: " + spotID);
+        } else {
+            System.out.println("Invalid or empty spot.");
+        }
+    }
+
+    public void viewParkedVehicles() {
+        parkingSpots.values().stream()
+                .filter(spot -> spot.isOccupied)
+                .forEach(spot -> System.out.println(spot.spotID + ": " + spot.vehicleDetails));
+    }
+
+    public boolean checkAvailability() {
+        return parkingSpots.values().stream().anyMatch(spot -> !spot.isOccupied);
+    }
+}
+
+public class ParkingLotSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ParkingLot parkingLot = new ParkingLot(5);
+
+        while (true) {
+            System.out.println("\n1. Park Vehicle\n2. Remove Vehicle\n3. View Parked Vehicles\n4. Check Availability\n5. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter vehicle details: ");
+                    parkingLot.parkVehicle(scanner.nextLine());
+                    break;
+                case 2:
+                    System.out.print("Enter spot ID: ");
+                    parkingLot.removeVehicle(scanner.nextLine());
+                    break;
+                case 3:
+                    parkingLot.viewParkedVehicles();
+                    break;
+                case 4:
+                    System.out.println(parkingLot.checkAvailability() ? "Spots available." : "No spots available.");
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
