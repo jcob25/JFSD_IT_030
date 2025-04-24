@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Hunt Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        #target-color {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .color-box {
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #score, #timer {
+            margin: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Color Hunt Game</h2>
+        <div id="target-color">Match This Color</div>
+        <div class="color-grid" id="color-grid"></div>
+        <p id="score">Score: 0</p>
+        <p id="timer">Time: 30</p>
+    </div>
+    <script>
+        const targetColorDiv = document.getElementById("target-color");
+        const colorGrid = document.getElementById("color-grid");
+        const scoreDisplay = document.getElementById("score");
+        const timerDisplay = document.getElementById("timer");
+        let score = 0;
+        let timeLeft = 30;
+        let targetColor;
+
+        function randomColor() {
+            return rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)});
+        }
+
+        function generateColors() {
+            colorGrid.innerHTML = "";
+            const colors = [];
+            for (let i = 0; i < 6; i++) {
+                colors.push(randomColor());
+            }
+            targetColor = colors[Math.floor(Math.random() * colors.length)];
+            targetColorDiv.style.background = targetColor;
+            colors.forEach(color => {
+                const div = document.createElement("div");
+                div.classList.add("color-box");
+                div.style.background = color;
+                div.addEventListener("click", () => checkColor(color));
+                colorGrid.appendChild(div);
+            });
+        }
+
+        function checkColor(selectedColor) {
+            if (selectedColor === targetColor) {
+                score += 10;
+            } else {
+                score -= 5;
+            }
+            scoreDisplay.textContent = "Score: " + score;
+            generateColors();
+        }
+
+        function startTimer() {
+            const timer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = "Time: " + timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert("Game Over! Your Score: " + score);
+                    location.reload();
+                }
+            }, 1000);
+        }
+
+        generateColors();
+        startTimer();
+    </script>
+</body>
+</html>
